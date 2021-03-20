@@ -1,29 +1,39 @@
-# KSP_GPWS
-A mod for Kerbal Space Program.
+# GPWS /L Unofficial
 
-Inspired from 
-http://forum.kerbalspaceprogram.com/threads/55408-0-24-Dev-slowdown-Nagging-Nadia-v0-13-beta by SolarLiner, 
-and http://forum.kerbalspaceprogram.com/threads/43134-0-22-GPWS-for-Jets-Planes-v1-2-Hear-yourself-land!-or-crash!
-by Cryphonus.
+This mod adds warning sounds for KSP. GPWS means "ground proximity warning system", a terrain awareness and alerting system. I also add TCAS ("traffic collision avoidance system") warning.
 
-------
+Unofficial fork by Lisias.
 
-Add warning sounds for Kerbal Space Program.
 
-GPWS means "ground proximity warning system", a terrain awareness and alerting system.
-The mod also adds TCAS ("traffic collision avoidance system") warning.
+## In a Hurry
 
-ref:
-- http://www51.honeywell.com/aero/common/documents/Mk_V_VII_EGPWS.pdf
-- http://www.boeing-727.com/Data/systems/infogpws.html
+* [Latest Release](https://github.com/net-lisias-kspu/GPWS/releases)
+	+ [Binaries](https://github.com/net-lisias-kspu/GPWS/tree/Archive)
+* [Source](https://github.com/net-lisias-kspu/GPWS)
+* Documentation
+	+ [Project's README](https://github.com/net-lisias-kspu/GPWS/blob/master/README.md)
+	+ [Install Instructions](https://github.com/net-lisias-kspu/GPWS/blob/master/INSTALL.md)
+	+ [Change Log](./CHANGE_LOG.md)
+	+ [TODO](./TODO.md) list
 
-------
 
-Development thread: http://forum.kerbalspaceprogram.com/threads/112420-WIP-0-90-GPWS-Warning-System-for-Planes
+## Description
 
-![UI](http://i.imgur.com/t980Na2.png)
+Just like commercial airliners your spaceplanes will have GPWS installed in your landing gear! Yes, you heard right: right into your landing gear!
 
-#### How to Use
+This mod basically adds GPWS and uses the default landing gear. This will add a couple of warning sounds if you are losing altitude rapidly and have a chance to crash into the terrain. The warning sound is probably something you are familiar with! `"WHOOP WHOOP PULL UP!!"`. Mod will also announce altitudes during a landing starting from 1000 to 10 meters.
+
+GPWS means "ground proximity warning system", a terrain awareness and alerting system. The mod also adds TCAS ("traffic collision avoidance system") warning.
+
+* References:
+	+ [Mk_V_VII_EGPWS.pdf](./Docs/Mk_V_VII_EGPWS.pdf)
+		- Original [link](http://www51.honeywell.com/aero/common/documents/Mk_V_VII_EGPWS.pdf), broken.
+	- [Ground Proximity Warning System
+(GPWS)](http://www.boeing-727.com/Data/systems/infogpws.html)
+
+![UI](./PR_material/t980Na2.png)
+
+### How to Use
 
 Fly an aircraft with landing gear(s).
 (It should have a ModuleWheelDeployment && ModuleWheelBrakes, or FSwheel module.)
@@ -42,9 +52,9 @@ P.S.1. This mod uses feet for plane altitude.
 
 P.S.2. Change "Descent Rate Factor" to allow faster/slower sink rate. (Set to 2 means you are allowed to sink 2 times faster than default.)
 
-#### Supported Warning List
+### Supported Warning List
 
-###### Plane
+#### Plane
 - sink rate
 - sink rate, whoop whoop pull up
 - terrain terrain
@@ -59,36 +69,28 @@ P.S.2. Change "Descent Rate Factor" to allow faster/slower sink rate. (Set to 2 
 - rotate
 - (stall) (joystick vibration tested on x1 controller)
 
-###### Lander
+#### Lander
 - sink rate
 - horizontal speed
 - altitude callout (1000, 500, 100, 50, 40, 30, 20, 10)
 - retard
 
-#### Download
 
-https://github.com/bssthu/KSP_GPWS/releases
+## Installation
 
-#### Installation
+Detailed installation instructions are now on its own file (see the [In a Hurry](#in-a-hurry) section) and on the distribution file.
 
-Just copy the contents of the archive to KSP's root folder.
 
-On Windows, you may rename XInputInterface_x86.dll (or XInputInterface_x64.dll on 64bit KSP) 
-to XInputInterface.dll
+## License:
 
-You need ModuleManager to make it work.
-If you don't have one, you can get it from
-http://forum.kerbalspaceprogram.com/threads/55219
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. (CC-NC-SA 4)
 
-#### Credits
+Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 
-- sarbian for ModuleManager
-- cybutek for KSP-AVC
-- blizzy78 for Toolbar
 
-------
+## UPSTREAM
 
-![CC-BY-NC-SA 4.0](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
-
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
-http://creativecommons.org/licenses/by-nc-sa/4.0/
+* [Cryphonus](https://forum.kerbalspaceprogram.com/index.php?/profile/23502-cryphonus/) ROOT
+	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/39704-*)
+* [bssthu](https://forum.kerbalspaceprogram.com/index.php?/profile/139023-bssthu/) CURRENT
+	+ [Github](https://github.com/bssthu/KSP_GPWS)
