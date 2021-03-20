@@ -1,5 +1,12 @@
 # GPWS :: Change Log
 
+* 2015-0430: 0.3-beta.1 (bssthu) for KSP 1.0 PRE-RELEASE
+	+ Changes
+		- Support KSP 1.0
+		- Can switch between plane/lander function manually
+		- Imporve traffic, terrain, too low warnings
+		- Say rotate when speed > take off speed
+		- Fix bugs
 * 2015-0309: 0.3-beta.0 (bssthu) for KSP 0.90 PRE-RELEASE
 	+ Changes
 		- Add support for planet landers,
