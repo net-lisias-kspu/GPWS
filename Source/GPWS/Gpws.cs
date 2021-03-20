@@ -257,7 +257,7 @@ namespace KSP_GPWS
             gpwsFunc.UpdateGPWS();
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (PreUpdate())
             {
