@@ -189,9 +189,13 @@ namespace KSP_GPWS.UI
         {
             Settings.ChangeVesselType = GUILayout.Toggle(Settings.ChangeVesselType, "change vessel type",
                     buttonStyle, GUILayout.Width(200), GUILayout.Height(20));
+
             // volume
             GUILayout.Label(String.Format("Volume: {0}%", Math.Round(Settings.Volume * 100.0f)));
             Settings.Volume = (float)Math.Round(GUILayout.HorizontalSlider(Settings.Volume, 0.0f, 1.0f), 2);
+
+            // Use Captions
+            Settings.UseCaption = GUILayout.Toggle(Settings.UseCaption, "Screen Captions", toggleStyle);
 
             switch (Gpws.ActiveVesselType)
             {

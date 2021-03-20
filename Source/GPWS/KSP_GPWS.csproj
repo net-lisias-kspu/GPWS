@@ -74,6 +74,8 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Config\Sounds.cs" />
+    <Compile Include="Config\Captions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

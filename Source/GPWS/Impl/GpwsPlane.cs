@@ -494,11 +494,11 @@ namespace KSP_GPWS.Impl
                         {
                             if (Util.audio.WasPlaying(KindOfSound.TERRAIN))
                             {
-                                Util.audio.PlaySound(KindOfSound.TERRAIN, "silence");
+                                Util.audio.PlaySound(KindOfSound.NONE);
                             }
                             else if (Util.audio.WasPlaying(KindOfSound.TERRAIN_PULL_UP))
                             {
-                                Util.audio.PlaySound(KindOfSound.TERRAIN, "silence");
+                                Util.audio.PlaySound(KindOfSound.NONE);
                             }
                         }
                     }   // End of if is descending (RA)
