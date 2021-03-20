@@ -1,5 +1,11 @@
 # GPWS :: Change Log
 
+* 2015-0309: 0.3-beta.0 (bssthu) for KSP 0.90 PRE-RELEASE
+	+ Changes
+		- Add support for planet landers,
+		- support descent rate warning, horizontal speed warning, throttle warning, and altitude callouts
+		- Add throttle warning (retard) for planes
+		- Fix bugs
 * 2015-0305: 0.2-beta.1 (bssthu) for KSP 0.90 PRE-RELEASE
 	+ Changes
 		- Add terrain clearance warning
