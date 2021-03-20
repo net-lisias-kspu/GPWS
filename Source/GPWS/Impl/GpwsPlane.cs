@@ -715,22 +715,17 @@ namespace KSP_GPWS.Impl
             return false;
         }
 
+        private const float checkGearUpTime = 5; // check at 5s
         private bool checkMode_GearUp()
         {
-            if (EnableGearUp)
-            {
-                float checkGearUpTime = 5;  // check at 5s
-                if ((CommonData.CurrentTime - CommonData.TakeOffTime) > checkGearUpTime
-                    && (CommonData.LastTime - CommonData.TakeOffTime) < checkGearUpTime
-                    && isGearDown)
-                {
-                    if (CommonData.VerSpeed >= 0)   // vspeed > 0
-                    {
-                        // play sound
-                        Util.audio.PlaySound(KindOfSound.GEAR_UP);
-                        return true;
-                    }
-                }
+            if (EnableGearUp && isGearDown  // Check GearDown first. No need to calculate anything when it is up!
+                && (CommonData.CurrentTime - CommonData.TakeOffTime) > checkGearUpTime
+                && (CommonData.LastTime - CommonData.TakeOffTime) < checkGearUpTime
+                && CommonData.VerSpeed >= 0
+            )
+            {   // play sound
+                Util.audio.PlaySound(KindOfSound.GEAR_UP);
+                return true;
             }
             return false;
         }
