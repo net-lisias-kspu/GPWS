@@ -1,5 +1,7 @@
 # GPWS :: Change Log
 
+* 2016-0530: 0.3.4 (bssthu) for KSP 1.1.2
+	+ Recompile for KSP 1.1.2
 * 2016-0425: 0.3-beta.3 (bssthu) for KSP 1.1 PRE-RELEASE
 	+ Update for KSP 1.1
 * 2015-0822: 0.3-beta.2 (bssthu) for KSP 1.0 PRE-RELEASE
