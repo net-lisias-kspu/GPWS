@@ -1,5 +1,9 @@
 # GPWS :: Change Log
 
+* 2015-0822: 0.3-beta.2 (bssthu) for KSP 1.0 PRE-RELEASE
+	+ Changes
+		- Check stall using AOA
+		- Shake joystick if stall
 * 2015-0430: 0.3-beta.1 (bssthu) for KSP 1.0 PRE-RELEASE
 	+ Changes
 		- Support KSP 1.0
