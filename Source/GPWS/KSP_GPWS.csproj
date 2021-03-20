@@ -76,6 +76,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="Config\Sounds.cs" />
     <Compile Include="Config\Captions.cs" />
+    <Compile Include="ModuleManagerSupport.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
