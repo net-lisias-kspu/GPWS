@@ -1,5 +1,8 @@
 # GPWS :: Change Log
 
+* 2016-1014: 0.3.6 (bssthu) for KSP 1.2
+	+ Recompile for KSP 1.2
+	+ Add `Gear up` and `V1` callouts
 * 2016-0608: 0.3.5 (bssthu) for KSP 1.1.2
 	+ Fix compatibility issues
 * 2016-0530: 0.3.4 (bssthu) for KSP 1.1.2
