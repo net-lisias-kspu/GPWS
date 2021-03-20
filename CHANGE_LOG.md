@@ -1,5 +1,8 @@
 # GPWS :: Change Log
 
+* 2017-0320: 0.3.7 (bssthu) for KSP 1.2 PRE-RELEASE
+	+ Recompile for KSP v1.2.9-prerelease
+	+ Don't hard-depend on ModuleManager
 * 2016-1014: 0.3.6 (bssthu) for KSP 1.2
 	+ Recompile for KSP 1.2
 	+ Add `Gear up` and `V1` callouts
