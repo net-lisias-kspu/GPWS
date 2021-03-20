@@ -271,8 +271,14 @@ namespace KSP_GPWS
             gpwsFunc.UpdateGPWS();
         }
 
+        private int DutyCycle = -1; // To force a Cycle on the first run.
         public void FixedUpdate()
         {
+            // Save some CPU on slower machines. See UpdateDutyCycle on Settings. Must be [1, 50]. The bigger, less times per second this is called.
+            // 1 = Runs every cycle
+            // 50 = Runs once each 50 cycles.
+            if (0 == (DutyCycle = (1+DutyCycle) % Settings.UpdateDutyCycle)) return;
+
             if (PreUpdate())
             {
                 UpdateGPWS();
