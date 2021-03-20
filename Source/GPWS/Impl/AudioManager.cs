@@ -213,7 +213,7 @@ namespace KSP_GPWS.Impl
 
             _kindOfSound = kind;
             lastPlayTime = Time.time;
-            Util.Log(String.Format("play " + filename));
+            Log.detail("play {0}", filename);
         }
 
         public void Stop()
