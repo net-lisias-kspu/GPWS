@@ -19,6 +19,8 @@
 using UnityEngine;
 using KSP_GPWS.Interfaces;
 
+using Asset = KSPe.IO.File<GPWS.Startup>.Asset;
+
 namespace KSP_GPWS.UI
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
@@ -31,7 +33,8 @@ namespace KSP_GPWS.UI
             if (Settings.UseBlizzy78Toolbar && ToolbarManager.ToolbarAvailable)
             {
                 btn = ToolbarManager.Instance.add("GPWS", "GPWSBtn");
-                btn.TexturePath = "GPWS/gpws";
+                btn.TexturePath = Asset.Solve("gpws");
+                Log.dbg("TexturePath {0}", btn.TexturePath);
                 btn.ToolTip = "GPWS settings";
                 btn.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
                 btn.OnClick += (e) => SettingGui.toggleSettingGui();

@@ -19,6 +19,8 @@
 using UnityEngine;
 using KSP_GPWS.Interfaces;
 
+using Asset = KSPe.IO.Asset<GPWS.Startup>;
+
 namespace KSP_GPWS.UI
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
@@ -47,7 +49,7 @@ namespace KSP_GPWS.UI
                         () => { },
                         () => { },
                         KSP.UI.Screens.ApplicationLauncher.AppScenes.FLIGHT,
-                        (Texture)GameDatabase.Instance.GetTexture("GPWS/gpws", false));
+                        Asset.Texture2D.LoadFromFile("gpws"));
             }
             if (Settings.guiIsActive)
             {
