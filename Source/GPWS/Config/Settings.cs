@@ -3,13 +3,12 @@
 // Author: bss, 2015
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using KSP;
 using UnityEngine;
+
 using KSP_GPWS.Interfaces;
-using KSP_GPWS.SimpleTypes;
+
+using Asset = KSPe.IO.Asset<GPWS.Startup>;
+using Data = KSPe.IO.Data<GPWS.Startup>;
 
 namespace KSP_GPWS
 {
@@ -38,6 +37,9 @@ namespace KSP_GPWS
         /// if true, treat lander as plane, treat plane as lander
         /// </summary>
         public static bool ChangeVesselType = false;
+
+        private static readonly Asset.ConfigNode TEMPLATE = Asset.ConfigNode.For("GPWS_SETTINGS", "settings.cfg");
+        private static readonly Data.ConfigNode SETTINGS = Data.ConfigNode.For("GPWS_SETTINGS");
 
         public static IPlaneConfig PlaneConfig
         {
@@ -94,10 +96,21 @@ namespace KSP_GPWS
 
         private static void LoadFromCfg()
         {
-            ConfigNode node = ConfigNode.Load(KSPUtil.ApplicationRootPath + "GameData/GPWS/settings.cfg");
-            if (node.HasNode("GPWS_SETTINGS"))
+            ConfigNode node;
+            if (SETTINGS.IsLoadable)
             {
-                node = node.GetNode("GPWS_SETTINGS");
+                SETTINGS.Load();
+                node = SETTINGS.Node;
+            }
+            else
+            {
+                TEMPLATE.Load();
+                node = TEMPLATE.Node;
+            }
+
+            //if (node.HasNode("GPWS_SETTINGS"))
+            {
+                //node = node.GetNode("GPWS_SETTINGS");
                 if (Util.ConvertValue(node, "name", "") == "gpwsSettings")
                 {
                     if (node.HasNode("Plane"))
@@ -120,7 +133,7 @@ namespace KSP_GPWS
 
         private static void LoadFromXml()
         {
-            KSP.IO.PluginConfiguration config = KSP.IO.PluginConfiguration.CreateForType<SettingsLoader>(); // why use template T?
+            Data.PluginConfiguration config = Data.PluginConfiguration.CreateFor("Window.xml");
             config.load();
             guiwindowPosition = config.GetValue<Rect>("guiwindowPosition", guiwindowPosition);
             showConfigs = config.GetValue<bool>("showConfig", showConfigs);
@@ -135,7 +148,6 @@ namespace KSP_GPWS
 
         private static void SaveToCfg()
         {
-            ConfigNode config = new ConfigNode();
             ConfigNode gpwsNode = new ConfigNode();
 
             gpwsNode.name = "GPWS_SETTINGS";
@@ -152,13 +164,12 @@ namespace KSP_GPWS
             gpwsNode.AddValue("Volume", Settings.Volume);
             gpwsNode.AddValue("UseBlizzy78Toolbar", UseBlizzy78Toolbar);
 
-            config.AddNode(gpwsNode);
-            config.Save(KSPUtil.ApplicationRootPath + "GameData/GPWS/settings.cfg", "GPWS");
+            SETTINGS.Save(gpwsNode);
         }
 
         public static void SaveToXml()
         {
-            KSP.IO.PluginConfiguration config = KSP.IO.PluginConfiguration.CreateForType<SettingsLoader>();
+            Data.PluginConfiguration config = Data.PluginConfiguration.CreateFor("Window.xml");
             config.SetValue("guiwindowPosition", guiwindowPosition);
             config.SetValue("showConfig", showConfigs);
             config.SetValue("guiIsActive", guiIsActive);
