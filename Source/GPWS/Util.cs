@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using KSP_GPWS.SimpleTypes;
 using KSP_GPWS.Impl;

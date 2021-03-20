@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using KSP_GPWS.Controller;
+﻿using KSP_GPWS.Controller;
 using UnityEngine;
 
 namespace KSP_GPWS.Impl
