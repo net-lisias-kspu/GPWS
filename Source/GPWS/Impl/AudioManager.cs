@@ -10,11 +10,9 @@ namespace KSP_GPWS.Impl
 {
     public class AudioManager
     {
-        private GameObject audioPlayer;
-        private string audioPrefix = "GPWS/Sounds";
         public float Volume { get; set; }
 
-        private AudioSource asGPWS;
+        private Sounds sounds;
         private float lastPlayTime = 0.0f;
 
         public KindOfSound KindOfSound
@@ -36,17 +34,10 @@ namespace KSP_GPWS.Impl
         {
             Volume = GameSettings.VOICE_VOLUME;
 
-            if (audioPlayer == null)
+            if (this.sounds == null)
             {
-                audioPlayer = new GameObject();
+                this.sounds = new Sounds(Volume);
             }
-            if (asGPWS == null)
-            {
-                asGPWS = new AudioSource();
-            }
-            asGPWS = audioPlayer.AddComponent<AudioSource>();
-            asGPWS.volume = Volume;
-            asGPWS.spatialBlend = 0;
 
             KindOfSound = KindOfSound.NONE;
             lastPlayTime = Time.time;
@@ -55,7 +46,7 @@ namespace KSP_GPWS.Impl
         public void UpdateVolume()
         {
             Volume = GameSettings.VOICE_VOLUME * Settings.Volume;
-            asGPWS.volume = Volume;
+            this.sounds.UpdateVolume(Volume);
         }
 
         public void PlaySound(KindOfSound kind, String detail = "")
@@ -70,27 +61,31 @@ namespace KSP_GPWS.Impl
                 case KindOfSound.SINK_RATE:
                     if (!IsPlaying(KindOfSound.SINK_RATE) && !IsPlaying(KindOfSound.SINK_RATE_PULL_UP))
                     {
-                        PlayOneShot(kind, "sink_rate");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.SINK_RATE_PULL_UP:
                     if (!IsPlaying(KindOfSound.SINK_RATE) && !IsPlaying(KindOfSound.SINK_RATE_PULL_UP))
                     {
-                        PlayOneShot(kind, "sink_rate_pull_up");
+                        Captions.PlayRed(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.TERRAIN:
                     if (!IsPlaying(KindOfSound.SINK_RATE) && !IsPlaying(KindOfSound.SINK_RATE_PULL_UP)
                         && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP))
                     {
-                        PlayOneShot(kind, detail == "" ? "terrain" : detail);
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.TERRAIN_PULL_UP:
                     if (!IsPlaying(KindOfSound.SINK_RATE) && !IsPlaying(KindOfSound.SINK_RATE_PULL_UP)
                         && !IsPlaying(KindOfSound.TERRAIN_PULL_UP))
                     {
-                        PlayOneShot(kind, detail == "" ? "terrain_pull_up" : detail);
+                        Captions.PlayRed(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.DONT_SINK:
@@ -98,7 +93,8 @@ namespace KSP_GPWS.Impl
                         && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP)
                         && !IsPlaying(KindOfSound.DONT_SINK))
                     {
-                        PlayOneShot(kind, "dont_sink");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.TOO_LOW_GEAR:
@@ -106,7 +102,8 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TOO_LOW_TERRAIN)
                             && !IsPlaying(KindOfSound.TOO_LOW_FLAPS))
                     {
-                        PlayOneShot(kind, "too_low_gear");
+                        Captions.PlayRed(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.TOO_LOW_TERRAIN:
@@ -115,13 +112,15 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TOO_LOW_GEAR) && !IsPlaying(KindOfSound.TOO_LOW_TERRAIN)
                             && !IsPlaying(KindOfSound.TOO_LOW_FLAPS))
                     {
-                        PlayOneShot(kind, "too_low_terrain");
+                        Captions.PlayRed(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.TRAFFIC:
                     if (!IsPlaying(KindOfSound.TRAFFIC))
                     {
-                        PlayOneShot(kind, "traffic");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.STALL:
@@ -130,24 +129,28 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP)
                             && !IsPlaying(KindOfSound.TOO_LOW_GEAR) && !IsPlaying(KindOfSound.TOO_LOW_TERRAIN))
                     {
-                        PlayOneShot(kind, "stall");
+                        Captions.PlayRed(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.ALTITUDE_CALLOUTS:
                     this.detail = detail;
-                    PlayOneShot(kind, "gpws" + detail);
+                    Captions.PlayGreen(kind, detail);
+                    PlayOneShot(kind, detail);
                     break;
                 case KindOfSound.BANK_ANGLE:
                     if (!IsPlaying(KindOfSound.BANK_ANGLE))
                     {
-                        PlayOneShot(kind, "bank_angle");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.HORIZONTAL_SPEED:
                     if (!IsPlaying(KindOfSound.SINK_RATE) && !IsPlaying(KindOfSound.SINK_RATE_PULL_UP)
                             && !IsPlaying(KindOfSound.HORIZONTAL_SPEED))
                     {
-                        PlayOneShot(kind, "horizontal_speed");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.RETARD:
@@ -155,7 +158,8 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP)
                             && !IsPlaying(KindOfSound.DONT_SINK) && !IsPlaying(KindOfSound.RETARD))
                     {
-                        PlayOneShot(kind, "retard");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.V1:
@@ -163,7 +167,8 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP)
                             && !IsPlaying(KindOfSound.DONT_SINK) && !IsPlaying(KindOfSound.V1) && !IsPlaying(KindOfSound.ROTATE))
                     {
-                        PlayOneShot(kind, "v1");
+                        Captions.PlayGreen(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.ROTATE:
@@ -171,7 +176,8 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP)
                             && !IsPlaying(KindOfSound.DONT_SINK) && !IsPlaying(KindOfSound.ROTATE))
                     {
-                        PlayOneShot(kind, "rotate");
+                        Captions.PlayGreen(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 case KindOfSound.GEAR_UP:
@@ -179,7 +185,8 @@ namespace KSP_GPWS.Impl
                             && !IsPlaying(KindOfSound.TERRAIN) && !IsPlaying(KindOfSound.TERRAIN_PULL_UP)
                             && !IsPlaying(KindOfSound.DONT_SINK) && !IsPlaying(KindOfSound.GEAR_UP))
                     {
-                        PlayOneShot(kind, "gear_up");
+                        Captions.PlayYellow(kind);
+                        PlayOneShot(kind);
                     }
                     break;
                 default:
@@ -187,37 +194,36 @@ namespace KSP_GPWS.Impl
             }
         }
 
-        private void PlayOneShot(KindOfSound kind, String filename)
+        private void PlayOneShot(KindOfSound kind)
         {
-            if (asGPWS.isPlaying)
-            {
-                asGPWS.Stop();
-            }
+            this.PlayOneShot(kind, "");
+        }
 
-            asGPWS.clip = GameDatabase.Instance.GetAudioClip(audioPrefix + "/" + filename);
-            asGPWS.Play();
+        private void PlayOneShot(KindOfSound kind, string detail)
+        {
+            this.sounds.PlayOneShot(kind, detail);
 
             _kindOfSound = kind;
             lastPlayTime = Time.time;
-            Log.detail("play {0}", filename);
+            Log.detail("play {0} {1}", kind, detail);
         }
-
+        
         public void Stop()
         {
-            if (asGPWS.isPlaying)
+            if (this.sounds.IsPlaying)
             {
-                asGPWS.Stop();
+                this.sounds.Stop();
             }
         }
 
         public bool IsPlaying()
         {
-            return asGPWS.isPlaying;
+            return this.sounds.IsPlaying;
         }
 
         public bool IsPlaying(KindOfSound kind)
         {
-            if (!asGPWS.isPlaying)
+            if (!this.sounds.IsPlaying)
             {
                 return false;
             }

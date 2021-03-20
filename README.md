@@ -83,7 +83,9 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 
 ## License:
 
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. (CC-NC-SA 4)
+Except when explicitly specified, this work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. (CC-NC-SA 4)
+
+Parts are licensed under SKL 1.0. Check the file headers.
 
 Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 
