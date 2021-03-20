@@ -74,7 +74,7 @@
 #>
 
 // Automatically generated code. Any changes will be lost!
-namespace <#= PROJECT_NAME #>
+namespace GPWS
 {
 	public static class Version
 	{
