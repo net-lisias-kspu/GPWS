@@ -32,7 +32,7 @@ namespace KSP_GPWS.Impl
 
         public void Initialize()
         {
-            Volume = GameSettings.VOICE_VOLUME;
+            Volume = GameSettings.UI_VOLUME;
 
             if (this.sounds == null)
             {
@@ -45,7 +45,7 @@ namespace KSP_GPWS.Impl
 
         public void UpdateVolume()
         {
-            Volume = GameSettings.VOICE_VOLUME * Settings.Volume;
+            Volume = GameSettings.UI_VOLUME * Settings.Volume;
             this.sounds.UpdateVolume(Volume);
         }
 
