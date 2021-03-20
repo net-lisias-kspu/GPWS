@@ -4,6 +4,5 @@
 *.user
 bin/
 obj/
-/GameData/
 *.dll
 .vs/
