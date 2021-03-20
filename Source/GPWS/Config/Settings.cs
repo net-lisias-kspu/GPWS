@@ -33,6 +33,7 @@ namespace KSP_GPWS
         public static bool UseCaption = true;
         public static float Volume = 0.5f;
         public static bool UseBlizzy78Toolbar = false;
+        public static int UpdateDutyCycle = 1;
 
         /// <summary>
         /// if true, treat lander as plane, treat plane as lander
@@ -126,11 +127,12 @@ namespace KSP_GPWS
                     Util.ConvertValue<bool>(node, "UseCaption", ref UseCaption);
                     Util.ConvertValue<float>(node, "Volume", ref Volume);
                     Util.ConvertValue(node, "UseBlizzy78Toolbar", ref UseBlizzy78Toolbar);
+                    Util.ConvertValue(node, "UseBlizzy78Toolbar", ref UpdateDutyCycle);
                 }   // End of has value "name"
             }
             // check legality
-            Volume = Math.Max(Volume, 0.0f);
-            Volume = Math.Min(Volume, 1.0f);
+            Volume = Math.Min(Math.Max(Volume, 0f), 1f);
+            UpdateDutyCycle = Math.Min(Math.Max(UpdateDutyCycle, 1), 50);
         }
 
         private static void LoadFromXml()
@@ -166,6 +168,7 @@ namespace KSP_GPWS
             gpwsNode.AddValue("UseCaption", Settings.UseCaption);
             gpwsNode.AddValue("Volume", Settings.Volume);
             gpwsNode.AddValue("UseBlizzy78Toolbar", UseBlizzy78Toolbar);
+            gpwsNode.AddValue("UpdateDutyCycle", UpdateDutyCycle);
 
             SETTINGS.Save(gpwsNode);
         }
