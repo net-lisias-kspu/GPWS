@@ -236,7 +236,7 @@ namespace KSP_GPWS
             Speed = (float)Math.Sqrt(HorSpeed * HorSpeed + VerSpeed * VerSpeed);
 
             // check volume
-            if (Util.audio.Volume != GameSettings.VOICE_VOLUME * Settings.Volume)
+            if (Util.audio.Volume != GameSettings.UI_VOLUME * Settings.Volume)
             {
                 Util.audio.UpdateVolume();
             }
