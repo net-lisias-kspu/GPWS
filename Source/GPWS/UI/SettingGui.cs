@@ -6,6 +6,9 @@ using System;
 using UnityEngine;
 using KSP_GPWS.Interfaces;
 
+using GUI = KSPe.UI.GUI;
+using GUILayout = KSPe.UI.GUILayout;
+
 namespace KSP_GPWS.UI
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
