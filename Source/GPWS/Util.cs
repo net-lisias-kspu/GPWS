@@ -122,9 +122,9 @@ namespace KSP_GPWS
 
                 if (p.Modules.Contains<GPWSGear>() || isModuleWheelGear)
                 {
-                    Util.Log("found one!!!");
+                    Log.dbg("found one!!!");
                     gears.Add(p);
-                    Log(String.Format("find {0} in {1}", p.name, p.vessel.name));
+                    Log.detail("find {0} in {1}", p.name, p.vessel.name);
                 }
             }
         }
@@ -343,11 +343,6 @@ namespace KSP_GPWS
             {
                 return "";
             }
-        }
-
-        public static void Log(String msg)
-        {
-            UnityEngine.Debug.Log("[GPWS]Info: " + msg);
         }
     }
 }

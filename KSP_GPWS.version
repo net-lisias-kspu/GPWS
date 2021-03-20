@@ -1,0 +1,18 @@
+{
+	"NAME"		: "GWPS /L Unofficial",
+	"URL"		: "https://raw.githubusercontent.com/net-lisias-kspu/GWPS/master/GWPS.version",
+	"DOWNLOAD"	: "https://github.com/net-lisias-kspu/GWPS/releases",
+	"CHANGE_LOG"	: "https://raw.githubusercontent.com/net-lisias-kspu/GWPS/master/CHANGE_LOG.md",
+	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/net-lisias-kspu/GWPS/master/CHANGES.md",
+	"VERSION":{
+		"MAJOR":0,
+		"MINOR":3,
+		"PATCH":9,
+		"BUILD":0
+		},
+	"KSP_VERSION_MIN":{
+		"MAJOR":1,
+		"MINOR":2,
+		"PATCH":0
+		}
+}
