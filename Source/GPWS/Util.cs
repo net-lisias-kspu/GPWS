@@ -102,7 +102,7 @@ namespace KSP_GPWS
             }
 
             String str = node.GetValue(key);
-            var typeConverter = TypeDescriptor.GetConverter(typeof(T));
+			TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(T));
 
             try
             {

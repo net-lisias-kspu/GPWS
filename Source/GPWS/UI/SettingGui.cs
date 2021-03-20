@@ -17,11 +17,7 @@
 
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
-using KSP_GPWS.SimpleTypes;
 using KSP_GPWS.Interfaces;
 
 namespace KSP_GPWS.UI
