@@ -1,5 +1,9 @@
 # GPWS :: Change Log
 
+* 2018-0714: 0.3.9 (bssthu) for KSP 1.2
+	+ Recompile for KSP v1.4.4
+	+ fix joystick shake's bug
+	+ improve TOO_LOW_TERRAIN warning
 * 2017-0527: 0.3.8 (bssthu) for KSP 1.2
 	+ Recompile for KSP v1.3
 * 2017-0320: 0.3.7 (bssthu) for KSP 1.2 PRE-RELEASE
