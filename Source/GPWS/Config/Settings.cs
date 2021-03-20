@@ -141,7 +141,7 @@ namespace KSP_GPWS
                     Util.ConvertValue<bool>(node, "UseCaption", ref UseCaption);
                     Util.ConvertValue<float>(node, "Volume", ref Volume);
                     Util.ConvertValue(node, "UseBlizzy78Toolbar", ref UseBlizzy78Toolbar);
-                    Util.ConvertValue(node, "UseBlizzy78Toolbar", ref UpdateDutyCycle);
+                    Util.ConvertValue(node, "UpdateDutyCycle", ref UpdateDutyCycle);
                 }   // End of has value "name"
             }
             // check legality
