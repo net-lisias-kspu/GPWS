@@ -27,7 +27,7 @@ namespace KSP_GPWS
 {
     internal static class Log
     {
-        private static readonly Logger log = Logger.CreateForType<Startup>();
+        private static readonly Logger log = Logger.CreateForType<GPWS.Startup>();
 
         internal static void force (string msg, params object [] @params)
         {
