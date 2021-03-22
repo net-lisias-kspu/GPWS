@@ -718,9 +718,9 @@ namespace KSP_GPWS.Impl
         private const float checkGearUpTime = 5; // check at 5s
         private bool checkMode_GearUp()
         {
-            if (EnableGearUp && isGearDown  // Check GearDown first. No need to calculate anything when it is up!
+            if (EnableGearUp && isGearDown  // Check GearDown first. No need to calculate anything else when it is up!
                 && (CommonData.CurrentTime - CommonData.TakeOffTime) > checkGearUpTime
-                && (CommonData.LastTime - CommonData.TakeOffTime) < checkGearUpTime
+                && (CommonData.LastTime - CommonData.TakeOffTime) < (checkGearUpTime+1) // We are missing the spot on weaker CPU (or bigger values on DutyCycle)
                 && CommonData.VerSpeed >= 0
             )
             {   // play sound

@@ -150,7 +150,7 @@ namespace KSP_GPWS
                 // landing gear contains ModuleWheelDeployment too, so check ModuleWheelBrakes
                 try
                 {
-                    if (gear.Modules.Contains<ModuleWheelDeployment>() && gear.Modules.Contains<ModuleWheelBrakes>())
+                    if (gear.Modules.Contains<ModuleWheelDeployment>() /*&& gear.Modules.Contains<ModuleWheelBrakes>()*/) // Not all landing wheels has breaks!
                     {
                         ModuleWheelDeployment m = gear.Modules.GetModule<ModuleWheelDeployment>();
                         if (m.stateString != null && m.stateString != "" && m.stateString != "Deployed")    // sometimes it's an empty string
@@ -159,7 +159,9 @@ namespace KSP_GPWS
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e) {
+                    Log.error(e, "Util.GearDeployed");
+                }
 
                 // FSwheel
                 try
@@ -173,7 +175,9 @@ namespace KSP_GPWS
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e) {
+                    Log.error(e, "Util.GearDeployed");
+                }
             }
             return true;
         }

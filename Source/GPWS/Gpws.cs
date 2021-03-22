@@ -120,12 +120,15 @@ namespace KSP_GPWS
 
         public static void InitializeGPWSFunctions()
         {
-            if (plane == null && lander == null)    // call once
+            if (plane == null)    // call once
             {
                 plane = new GpwsPlane();
-                Settings.PlaneConfig = plane as IPlaneConfig;
+                Settings.CurrentPlaneConfig = plane as IPlaneConfig;
+            }
+            if (lander == null)    // call once
+            {
                 lander = new GpwsLander();
-                Settings.LanderConfig = lander as ILanderConfig;
+                Settings.CurrentLanderConfig = lander as ILanderConfig;
             }
         }
 
@@ -274,10 +277,10 @@ namespace KSP_GPWS
         private int DutyCycle = -1; // To force a Cycle on the first run.
         public void FixedUpdate()
         {
-//            Log.dbg("Fixed Update {0} {1}", DutyCycle, Settings.UpdateDutyCycle);
             // Save some CPU on slower machines. See UpdateDutyCycle on Settings. Must be [1, 50]. The bigger, less times per second this is called.
             // 1 = Runs every cycle
             // 50 = Runs once each 50 cycles.
+//            Log.dbg("Fixed Update {0} {1}", DutyCycle, Settings.UpdateDutyCycle);
             if (0 != (DutyCycle = ((1+DutyCycle) % Settings.UpdateDutyCycle))) return;
 //            Log.dbg("Fixed Update Duty!");
 
