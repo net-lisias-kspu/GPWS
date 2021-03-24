@@ -120,14 +120,12 @@ namespace KSP_GPWS
 
         public void Awake()
         {
-            plane.Initialize(this as IGpwsCommonData);
-            lander.Initialize(this as IGpwsCommonData);
-            initializeVariables();
+            Log.detail("Awake");
         }
 
         private void initializeVariables()
         {
-            ActiveVessel = null;
+            ActiveVessel = FlightGlobals.ActiveVessel;
 
             RadarAltitude = 0.0f;
             Altitude = 0.0f;
@@ -151,11 +149,15 @@ namespace KSP_GPWS
         public void Start()
         {
             Log.detail("Start");
-            Util.audio.Initialize();
 
-            ActiveVessel = FlightGlobals.ActiveVessel;
-            OnVesselChange(ActiveVessel);
+            Util.audio.Initialize();
+            plane.Initialize(this as IGpwsCommonData);
+            lander.Initialize(this as IGpwsCommonData);
+
+            initializeVariables();
             Initialize(ActiveVessel);
+            Util.audio.Stop();
+        }
 
         private void Initialize(Vessel v)
         {
@@ -170,7 +172,6 @@ namespace KSP_GPWS
             Settings.LoadCurrentVesselConfig(this.ActiveVessel);
             plane.ChangeVessel(v);
             lander.ChangeVessel(v);
-            Util.audio.Stop();
         }
 
         private bool PreUpdate()
