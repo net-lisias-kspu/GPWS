@@ -46,12 +46,7 @@ namespace KSP_GPWS.Impl
 
         public void Initialize()
         {
-            Volume = GameSettings.UI_VOLUME;
-
-            if (this.sounds == null)
-            {
-                this.sounds = new Sounds(Volume);
-            }
+            this.sounds = new Sounds();
 
             KindOfSound = KindOfSound.NONE;
             lastPlayTime = Time.time;
