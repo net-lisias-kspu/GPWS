@@ -280,11 +280,11 @@ namespace KSP_GPWS.Impl
                 UnitOfAltitude unit = UnitOfAltitude.NONE;
                 if (Gpws.ActiveVesselType == SimpleTypes.VesselType.PLANE)
                 {
-                    unit = Settings.PlaneConfig.UnitOfAltitude;
+                    unit = Settings.CurrentPlaneConfig.UnitOfAltitude;
                 }
                 else if (Gpws.ActiveVesselType == SimpleTypes.VesselType.LANDER)
                 {
-                    unit = Settings.LanderConfig.UnitOfAltitude;
+                    unit = Settings.CurrentLanderConfig.UnitOfAltitude;
                 }
                 rtfText = detail + Util.GetShortString(unit);
             }

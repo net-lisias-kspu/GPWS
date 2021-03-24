@@ -23,6 +23,7 @@ using KSP_GPWS.Interfaces;
 
 using Asset = KSPe.IO.Asset<GPWS.Startup>;
 using Data = KSPe.IO.Data<GPWS.Startup>;
+using Save = KSPe.IO.Save<GPWS.Startup>;
 
 namespace KSP_GPWS
 {
@@ -57,48 +58,50 @@ namespace KSP_GPWS
         private static readonly Asset.ConfigNode TEMPLATE = Asset.ConfigNode.For("GPWS_SETTINGS", "settings.cfg");
         private static readonly Data.ConfigNode SETTINGS = Data.ConfigNode.For("GPWS_SETTINGS");
 
-        public static IPlaneConfig PlaneConfig
+        private static ConfigNode planeDefaultConfigNode = null;
+        private static ConfigNode landerDefaultConfigNode = null;
+
+        private static ConfigNode currentPlaneConfigNode = null;
+        private static IPlaneConfig _currentPlaneConfig = null;
+        public static IPlaneConfig CurrentPlaneConfig
         {
             get
             {
-                return _planeConfig;
+                return _currentPlaneConfig;
             }
             set
             {
-                if (_planeConfig == null)
+                if (_currentPlaneConfig == null)
                 {
-                    _planeConfig = value;
-                    if (planeConfigNode != null)
+                    _currentPlaneConfig = value;
+                    if (currentPlaneConfigNode != null)
                     {
-                        (_planeConfig as IConfigNode).Load(planeConfigNode);
+                        (_currentPlaneConfig as IConfigNode).Load(currentPlaneConfigNode);
                     }
                 }
             }
         }
-        private static IPlaneConfig _planeConfig = null;
 
-        public static ILanderConfig LanderConfig
+        private static ConfigNode currentLanderConfigNode = null;
+        private static ILanderConfig _currentLanderConfig = null;
+        public static ILanderConfig CurrentLanderConfig
         {
             get
             {
-                return _landerConfig;
+                return _currentLanderConfig;
             }
             set
             {
-                if (_landerConfig == null)
+                if (_currentLanderConfig == null)
                 {
-                    _landerConfig = value;
-                    if (landerConfigNode != null)
+                    _currentLanderConfig = value;
+                    if (currentLanderConfigNode != null)
                     {
-                        (_landerConfig as IConfigNode).Load(landerConfigNode);
+                        (_currentLanderConfig as IConfigNode).Load(currentLanderConfigNode);
                     }
                 }
             }
         }
-        private static ILanderConfig _landerConfig = null;
-
-        private static ConfigNode planeConfigNode = null;
-        private static ConfigNode landerConfigNode = null;
 
         public static Rect guiwindowPosition = new Rect(100, 100, 100, 50);
         public static bool showConfigs = true;  // show lower part of the setting GUI
@@ -130,13 +133,10 @@ namespace KSP_GPWS
                 if (Util.ConvertValue(node, "name", "") == "gpwsSettings")
                 {
                     if (node.HasNode("Plane"))
-                    {
-                        planeConfigNode = node.GetNode("Plane");
-                    }
+                        planeDefaultConfigNode = node.GetNode("Plane");
+
                     if (node.HasNode("Lander"))
-                    {
-                        landerConfigNode = node.GetNode("Lander");
-                    }
+                        landerDefaultConfigNode = node.GetNode("Lander");
 
                     Util.ConvertValue<bool>(node, "UseCaption", ref UseCaption);
                     Util.ConvertValue<float>(node, "Volume", ref Volume);
@@ -149,7 +149,27 @@ namespace KSP_GPWS
             UpdateDutyCycle = Math.Min(Math.Max(UpdateDutyCycle, 1), 50);
         }
 
-        private static void LoadFromXml()
+		internal static void LoadCurrentVesselConfig(Vessel vessel)
+		{
+			vessel = vessel ?? FlightGlobals.ActiveVessel; // better safe than sorry
+
+			Save.ConfigNode config = Save.ConfigNode.For("GPWS_SETTINGS");
+			if (config.IsLoadable) config.Load();
+
+			ConfigNode vesselNode = config.Node.GetNode(vessel.vesselName) ?? new ConfigNode(vessel.vesselName);
+
+			{
+				currentPlaneConfigNode = vesselNode.GetNode(planeDefaultConfigNode.name) ?? KSPe.ConfigNodeWithSteroids.from(planeDefaultConfigNode);
+				currentPlaneConfigNode.name = planeDefaultConfigNode.name;
+			}
+
+			{
+				currentLanderConfigNode = vesselNode.GetNode(landerDefaultConfigNode.name) ?? KSPe.ConfigNodeWithSteroids.from(landerDefaultConfigNode);
+				currentLanderConfigNode.name = landerDefaultConfigNode.name;
+			}
+		}
+
+		private static void LoadFromXml()
         {
             Data.PluginConfiguration config = Data.PluginConfiguration.CreateFor("Window.xml");
             config.load();
@@ -166,28 +186,59 @@ namespace KSP_GPWS
 
         private static void SaveToCfg()
         {
-            ConfigNode gpwsNode = new ConfigNode();
+            {
+                ConfigNode gpwsNode = new ConfigNode();
 
-            gpwsNode.name = "GPWS_SETTINGS";
-            gpwsNode.AddValue("name", "gpwsSettings");
+                gpwsNode.name = "GPWS_SETTINGS";
+                gpwsNode.AddValue("name", "gpwsSettings");
 
-            ConfigNode planeNode = new ConfigNode();
-            PlaneConfig.Save(planeNode);
-            gpwsNode.AddNode(planeNode);
+                gpwsNode.AddNode(planeDefaultConfigNode);
+                gpwsNode.AddNode(landerDefaultConfigNode);
 
-            ConfigNode landerNode = new ConfigNode();
-            LanderConfig.Save(landerNode);
-            gpwsNode.AddNode(landerNode);
+                gpwsNode.AddValue("UseCaption", Settings.UseCaption);
+                gpwsNode.AddValue("Volume", Settings.Volume);
+                gpwsNode.AddValue("UseBlizzy78Toolbar", UseBlizzy78Toolbar);
+                gpwsNode.AddValue("UpdateDutyCycle", UpdateDutyCycle);
 
-            gpwsNode.AddValue("UseCaption", Settings.UseCaption);
-            gpwsNode.AddValue("Volume", Settings.Volume);
-            gpwsNode.AddValue("UseBlizzy78Toolbar", UseBlizzy78Toolbar);
-            gpwsNode.AddValue("UpdateDutyCycle", UpdateDutyCycle);
-
-            SETTINGS.Save(gpwsNode);
+                SETTINGS.Save(gpwsNode);
+            }
         }
 
-        public static void SaveToXml()
+		internal static void SaveCurrentVesselConfig(Vessel vessel)
+		{
+			if (null == vessel) return; // Better safe than sorry
+
+			Save.ConfigNode config = Save.ConfigNode.For("GPWS_SETTINGS");
+			ConfigNode gpwsNode = config.Node;
+			ConfigNode vesselNode = gpwsNode.GetNode(vessel.vesselName);
+			if (null == vesselNode)
+			{
+				vesselNode = new ConfigNode(vessel.vesselName);
+				vesselNode.name = vessel.vesselName;
+				gpwsNode.AddNode(vesselNode);
+			}
+			{
+				ConfigNode planeNode = vesselNode.GetNode(planeDefaultConfigNode.name);
+				if (null == planeNode)
+				{
+					planeNode = new ConfigNode(planeDefaultConfigNode.name);
+					vesselNode.AddNode(planeNode);
+				}
+				CurrentPlaneConfig.Save(planeNode);
+			}
+			{
+				ConfigNode landerNode = gpwsNode.GetNode(landerDefaultConfigNode.name);
+				if (null == landerNode)
+				{
+					landerNode = new ConfigNode(landerDefaultConfigNode.name);
+					vesselNode.AddNode(landerNode);
+				}
+				CurrentLanderConfig.Save(landerNode);
+			}
+			config.Save();
+		}
+
+		public static void SaveToXml()
         {
             Data.PluginConfiguration config = Data.PluginConfiguration.CreateFor("Window.xml");
             config.SetValue("guiwindowPosition", guiwindowPosition);

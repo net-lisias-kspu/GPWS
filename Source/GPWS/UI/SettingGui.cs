@@ -52,8 +52,8 @@ namespace KSP_GPWS.UI
             GameEvents.onShowUI.Add(ShowUI);
             GameEvents.onHideUI.Add(HideUI);
 
-            planeConfig = Settings.PlaneConfig;
-            landerConfig = Settings.LanderConfig;
+            planeConfig = Settings.CurrentPlaneConfig;
+            landerConfig = Settings.CurrentLanderConfig;
 
             descentRateFactorExp = (float)Math.Log10(planeConfig.DescentRateFactor);
             tooLowGearAltitudeString = planeConfig.TooLowGearAltitude.ToString();
@@ -150,8 +150,8 @@ namespace KSP_GPWS.UI
 
         private void WindowFunc(int windowID)
         {
-            planeConfig = Settings.PlaneConfig;
-            landerConfig = Settings.LanderConfig;
+            planeConfig = Settings.CurrentPlaneConfig;
+            landerConfig = Settings.CurrentLanderConfig;
             ConfigureStyles();
 
             // begin drawing
@@ -197,6 +197,9 @@ namespace KSP_GPWS.UI
             GUILayout.Label(String.Format("Volume: {0}%", Math.Round(Settings.Volume * 100.0f)));
             Settings.Volume = (float)Math.Round(GUILayout.HorizontalSlider(Settings.Volume, 0.0f, 1.0f), 2);
 
+            planeConfig.EnableSystem =
+                    GUILayout.Toggle(planeConfig.EnableSystem, "System Enable", toggleStyle);
+
             // Use Captions
             Settings.UseCaption = GUILayout.Toggle(Settings.UseCaption, "Screen Captions", toggleStyle);
 
@@ -230,17 +233,16 @@ namespace KSP_GPWS.UI
                 }
                 // save
                 Settings.SaveSettings();
+                Settings.SaveCurrentVesselConfig(FlightGlobals.ActiveVessel);
             }
         }
 
         private void drawPlaneSetting()
         {
-            planeConfig.EnableSystem =
-                    GUILayout.Toggle(planeConfig.EnableSystem, "System Enable", toggleStyle);
-
             // descent rate config
             planeConfig.EnableDescentRate =
                     GUILayout.Toggle(planeConfig.EnableDescentRate, "Descent Rate", toggleStyle);
+
             planeConfig.EnableClosureToTerrain =
                     GUILayout.Toggle(planeConfig.EnableClosureToTerrain, "Closure to Terrain", toggleStyle);
 
@@ -319,9 +321,6 @@ namespace KSP_GPWS.UI
 
         private void drawLanderSetting()
         {
-            landerConfig.EnableSystem =
-                    GUILayout.Toggle(landerConfig.EnableSystem, "System Enable", toggleStyle);
-
             // descent rate
             landerConfig.EnableDescentRate =
                     GUILayout.Toggle(landerConfig.EnableDescentRate, "Descent Rate", toggleStyle);

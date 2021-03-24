@@ -169,10 +169,19 @@ namespace KSP_GPWS
 
             ActiveVessel = FlightGlobals.ActiveVessel;
             OnVesselChange(ActiveVessel);
+            Initialize(ActiveVessel);
+
+        private void Initialize(Vessel v)
+        {
+            Settings.LoadCurrentVesselConfig(this.ActiveVessel);
+            plane.ChangeVessel(v);
+            lander.ChangeVessel(v);
         }
 
         private void OnVesselChange(Vessel v)
         {
+            Settings.SaveCurrentVesselConfig(this.LastActiveVessel);
+            Settings.LoadCurrentVesselConfig(this.ActiveVessel);
             plane.ChangeVessel(v);
             lander.ChangeVessel(v);
             Util.audio.Stop();
