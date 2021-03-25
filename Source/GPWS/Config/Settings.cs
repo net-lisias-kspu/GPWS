@@ -59,8 +59,6 @@ namespace KSP_GPWS
         private static readonly Data.ConfigNode SETTINGS = Data.ConfigNode.For("GPWS_SETTINGS");
 
         private static ConfigNode planeDefaultConfigNode = null;
-        private static ConfigNode landerDefaultConfigNode = null;
-
         private static ConfigNode currentPlaneConfigNode = null;
         private static IPlaneConfig _currentPlaneConfig = null;
         public static IPlaneConfig CurrentPlaneConfig
@@ -71,17 +69,15 @@ namespace KSP_GPWS
             }
             set
             {
-                if (_currentPlaneConfig == null)
+                _currentPlaneConfig = value;
+                if (null != planeDefaultConfigNode)
                 {
-                    _currentPlaneConfig = value;
-                    if (currentPlaneConfigNode != null)
-                    {
-                        (_currentPlaneConfig as IConfigNode).Load(currentPlaneConfigNode);
-                    }
+                    (_currentPlaneConfig as IConfigNode).Load(planeDefaultConfigNode);
                 }
             }
         }
 
+        private static ConfigNode landerDefaultConfigNode = null;
         private static ConfigNode currentLanderConfigNode = null;
         private static ILanderConfig _currentLanderConfig = null;
         public static ILanderConfig CurrentLanderConfig
@@ -92,13 +88,10 @@ namespace KSP_GPWS
             }
             set
             {
-                if (_currentLanderConfig == null)
+                _currentLanderConfig = value;
+                if (null != landerDefaultConfigNode)
                 {
-                    _currentLanderConfig = value;
-                    if (currentLanderConfigNode != null)
-                    {
-                        (_currentLanderConfig as IConfigNode).Load(currentLanderConfigNode);
-                    }
+                    (_currentPlaneConfig as IConfigNode).Load(landerDefaultConfigNode);
                 }
             }
         }
@@ -154,18 +147,24 @@ namespace KSP_GPWS
 			vessel = vessel ?? FlightGlobals.ActiveVessel; // better safe than sorry
 
 			Save.ConfigNode config = Save.ConfigNode.For("GPWS_SETTINGS");
+			Log.dbg("{0} IsLoadable = {1}", config.KspPath, config.IsLoadable);
 			if (config.IsLoadable) config.Load();
+			Log.dbg("{0}", config.Node.ToString());
 
+			Log.dbg("{0} HasNode {1} {2}", config.KspPath, vessel.vesselName, null != config.Node.GetNode(vessel.vesselName));
 			ConfigNode vesselNode = config.Node.GetNode(vessel.vesselName) ?? new ConfigNode(vessel.vesselName);
 
 			{
+    			Log.dbg("{0} HasNode {1} {2}", config.KspPath, planeDefaultConfigNode.name, null != vesselNode.GetNode(planeDefaultConfigNode.name));
 				currentPlaneConfigNode = vesselNode.GetNode(planeDefaultConfigNode.name) ?? KSPe.ConfigNodeWithSteroids.from(planeDefaultConfigNode);
 				currentPlaneConfigNode.name = planeDefaultConfigNode.name;
+				CurrentPlaneConfig.Load(currentPlaneConfigNode);
 			}
 
 			{
 				currentLanderConfigNode = vesselNode.GetNode(landerDefaultConfigNode.name) ?? KSPe.ConfigNodeWithSteroids.from(landerDefaultConfigNode);
 				currentLanderConfigNode.name = landerDefaultConfigNode.name;
+				CurrentLanderConfig.Load(currentLanderConfigNode);
 			}
 		}
 
