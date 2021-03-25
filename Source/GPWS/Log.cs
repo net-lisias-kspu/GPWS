@@ -59,6 +59,11 @@ namespace KSP_GPWS
             log.error(msg, @params);
         }
 
+        internal static void trace(string msg, params object[] @params)
+        {
+            log.trace(msg, @params);
+        }
+
         [ConditionalAttribute("DEBUG")]
         internal static void dbg(string msg, params object[] @params)
         {
