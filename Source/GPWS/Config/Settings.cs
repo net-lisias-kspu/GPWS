@@ -207,6 +207,8 @@ namespace KSP_GPWS
 
 			string vesselSaneName = sanitize(vessel.vesselName);
 			Save.ConfigNode config = Save.ConfigNode.For("GPWS_SETTINGS");
+			if (config.IsLoadable) config.Load();
+
 			ConfigNode gpwsNode = config.Node;
 			ConfigNode vesselNode = gpwsNode.GetNode(vesselSaneName);
 			if (null == vesselNode)
