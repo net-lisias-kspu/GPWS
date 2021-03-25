@@ -134,12 +134,18 @@ namespace KSP_GPWS
 
         public void Awake()
         {
-            Log.detail("Awake");
+            Log.trace("Awake");
+
+            Util.audio.Initialize();
+            plane.Initialize(this as IGpwsCommonData);
+            lander.Initialize(this as IGpwsCommonData);
+            initializeVariables();
+            this.enabled = true;
         }
 
         private void initializeVariables()
         {
-            ActiveVessel = FlightGlobals.ActiveVessel;
+            ActiveVessel = LastActiveVessel = null;
 
             RadarAltitude = 0.0f;
             Altitude = 0.0f;
@@ -160,38 +166,40 @@ namespace KSP_GPWS
             LastTime = t0;
         }
 
+        // This is not being called by Unity. :(
+        private bool started = false;
         public void Start()
         {
-            Log.detail("Start");
+            if (this.started) return;   // Preventing accidents
+            Log.trace("Start");
 
-            Util.audio.Initialize();
-            plane.Initialize(this as IGpwsCommonData);
-            lander.Initialize(this as IGpwsCommonData);
-
-            initializeVariables();
-            Initialize(ActiveVessel);
-            Util.audio.Stop();
-        }
-
-        private void Initialize(Vessel v)
-        {
+            // We are in flight, it's guarantted that a Vessel is active now.
+            this.ActiveVessel = FlightGlobals.ActiveVessel;
+            this.saveData();    // Guarantee a initial state. 
+            Log.dbg("Start {0}", this.ActiveVessel.vesselName);
             Settings.LoadCurrentVesselConfig(this.ActiveVessel);
-            plane.ChangeVessel(v);
-            lander.ChangeVessel(v);
+            plane.ChangeVessel(this.ActiveVessel);
+            lander.ChangeVessel(this.ActiveVessel);
+
+            GameEvents.onVesselChange.Add(this.OnVesselChange);
+            this.started = true;
         }
 
         private void OnVesselChange(Vessel v)
         {
+            Log.trace("OnVesselChange {0}", v.vesselName);
+
             Settings.SaveCurrentVesselConfig(this.LastActiveVessel);
             Settings.LoadCurrentVesselConfig(this.ActiveVessel);
             plane.ChangeVessel(v);
             lander.ChangeVessel(v);
+            this.LastActiveVessel = this.ActiveVessel;
+            this.ActiveVessel = v;
         }
 
         private bool PreUpdate()
         {
             CurrentTime = Time.time - t0;
-            ActiveVessel = FlightGlobals.ActiveVessel;
 
             // on surface
             if (ActiveVessel.LandedOrSplashed)
@@ -208,12 +216,6 @@ namespace KSP_GPWS
             {
                 Util.audio.SetUnavailable();
                 return false;
-            }
-
-            // just switched, use new vessel
-            if (ActiveVessel != LastActiveVessel)
-            {
-                OnVesselChange(ActiveVessel);
             }
 
             // check vessel type
@@ -284,9 +286,11 @@ namespace KSP_GPWS
             gpwsFunc.UpdateGPWS();
         }
 
-        private int DutyCycle = -1; // To force a Cycle on the first run.
+        private int DutyCycle = -1; // To force a Duty Cycle on the first run.
         public void FixedUpdate()
         {
+            if (!this.started) this.Start(); // Unity, by some reason, is not calling the Start callback!
+
             // Save some CPU on slower machines. See UpdateDutyCycle on Settings. Must be [1, 50]. The bigger, less times per second this is called.
             // 1 = Runs every cycle
             // 50 = Runs once each 50 cycles.
@@ -309,11 +313,13 @@ namespace KSP_GPWS
             LastHorSpeed = HorSpeed;    // save last speed
             LastVerSpeed = VerSpeed;
             LastTime = CurrentTime;        // save time of last frame
-            LastActiveVessel = ActiveVessel;
         }
 
-        public void OnDestroy()
+        public void OnDestroy() // We left the FlightScene, this Monobehaviour is being destroyed.
         {
+            GameEvents.onVesselChange.Remove(this.OnVesselChange);
+
+            Settings.SaveCurrentVesselConfig(this.ActiveVessel);
             plane.CleanUp();
             lander.CleanUp();
 
