@@ -24,6 +24,7 @@ using KSP_GPWS.Interfaces;
 using Asset = KSPe.IO.Asset<GPWS.Startup>;
 using Data = KSPe.IO.Data<GPWS.Startup>;
 using Save = KSPe.IO.Save<GPWS.Startup>;
+using System.Text.RegularExpressions;
 
 namespace KSP_GPWS
 {
@@ -147,15 +148,12 @@ namespace KSP_GPWS
 			vessel = vessel ?? FlightGlobals.ActiveVessel; // better safe than sorry
 
 			Save.ConfigNode config = Save.ConfigNode.For("GPWS_SETTINGS");
-			Log.dbg("{0} IsLoadable = {1}", config.KspPath, config.IsLoadable);
 			if (config.IsLoadable) config.Load();
-			Log.dbg("{0}", config.Node.ToString());
 
-			Log.dbg("{0} HasNode {1} {2}", config.KspPath, vessel.vesselName, null != config.Node.GetNode(vessel.vesselName));
-			ConfigNode vesselNode = config.Node.GetNode(vessel.vesselName) ?? new ConfigNode(vessel.vesselName);
+			string vesselSaneName = sanitize(vessel.vesselName);
+			ConfigNode vesselNode = config.Node.GetNode(vesselSaneName) ?? new ConfigNode(vesselSaneName);
 
 			{
-    			Log.dbg("{0} HasNode {1} {2}", config.KspPath, planeDefaultConfigNode.name, null != vesselNode.GetNode(planeDefaultConfigNode.name));
 				currentPlaneConfigNode = vesselNode.GetNode(planeDefaultConfigNode.name) ?? KSPe.ConfigNodeWithSteroids.from(planeDefaultConfigNode);
 				currentPlaneConfigNode.name = planeDefaultConfigNode.name;
 				CurrentPlaneConfig.Load(currentPlaneConfigNode);
@@ -207,13 +205,14 @@ namespace KSP_GPWS
 		{
 			if (null == vessel) return; // Better safe than sorry
 
+			string vesselSaneName = sanitize(vessel.vesselName);
 			Save.ConfigNode config = Save.ConfigNode.For("GPWS_SETTINGS");
 			ConfigNode gpwsNode = config.Node;
-			ConfigNode vesselNode = gpwsNode.GetNode(vessel.vesselName);
+			ConfigNode vesselNode = gpwsNode.GetNode(vesselSaneName);
 			if (null == vesselNode)
 			{
-				vesselNode = new ConfigNode(vessel.vesselName);
-				vesselNode.name = vessel.vesselName;
+				vesselNode = new ConfigNode(vesselSaneName);
+				vesselNode.name = vesselSaneName;
 				gpwsNode.AddNode(vesselNode);
 			}
 			{
@@ -245,5 +244,11 @@ namespace KSP_GPWS
             config.SetValue("guiIsActive", guiIsActive);
             config.save();
         }
+
+		private static readonly Regex SANITIZESTRING = new Regex("[^a-zA-Z0-9]");
+		private static string sanitize(string s)
+		{
+			return SANITIZESTRING.Replace(s, String.Empty);
+		}
     }
 }
