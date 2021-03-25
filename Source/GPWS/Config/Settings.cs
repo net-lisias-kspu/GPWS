@@ -227,7 +227,7 @@ namespace KSP_GPWS
 				CurrentPlaneConfig.Save(planeNode);
 			}
 			{
-				ConfigNode landerNode = gpwsNode.GetNode(landerDefaultConfigNode.name);
+				ConfigNode landerNode = vesselNode.GetNode(landerDefaultConfigNode.name);
 				if (null == landerNode)
 				{
 					landerNode = new ConfigNode(landerDefaultConfigNode.name);
