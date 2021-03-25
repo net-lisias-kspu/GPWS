@@ -1,6 +1,7 @@
 ﻿// GPWS mod for KSP
 // License: CC-BY-NC-SA
 // Author: bss, 2015
+// Author: LisiasT, 2021
 
 using System;
 using System.Collections.Generic;
