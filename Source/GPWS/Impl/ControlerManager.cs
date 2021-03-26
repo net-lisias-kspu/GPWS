@@ -16,45 +16,38 @@
 	along with GPWS /L Unleashed. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using KSP_GPWS.Controller;
-using UnityEngine;
+﻿using UnityEngine;
+
+using KSPe.HMI.Multiplatform.XInput;
+using GamePad = KSPe.HMI.Multiplatform.XInput.GamePad.Controller;
 
 namespace KSP_GPWS.Impl
 {
     public class ControlerManager
     {
-        private XInputWrapper xInput;
-
         public const float SHAKE_TIME = 1.0f;
         private float shakeStartTime = 0.0f;
 
         public ControlerManager()
         {
-            xInput = new XInputWrapper();
         }
 
         public void SetShake(float leftMotor, float rightMotor)
         {
-            for (uint playerIndex = 0; playerIndex < 4; playerIndex++)
-            {
-                if (xInput.IsConnected(playerIndex))
-                {
-                    shakeStartTime = now();
-                    xInput.SetVibration(playerIndex, leftMotor, rightMotor);
-                }
-            }
+            //for (PlayerIndex playerIndex = PlayerIndex.One; playerIndex <= PlayerIndex.Four; playerIndex++)
+            //{
+            //    GamePad.SetVibration(playerIndex, leftMotor, rightMotor);
+            //}
+            shakeStartTime = now();
         }
 
         public void ResetShake()
         {
             shakeStartTime = 0.0f;
-            for (uint playerIndex = 0; playerIndex < 4; playerIndex++)
-            {
-                if (xInput.IsConnected(playerIndex))
-                {
-                    xInput.SetVibration(playerIndex, 0f, 0f);
-                }
-            }
+            //for (PlayerIndex playerIndex = PlayerIndex.One; playerIndex <= PlayerIndex.Four; playerIndex++)
+            //{
+            //    GamePad.SetVibration(playerIndex, 0f, 0f);
+            //}
         }
 
         // to auto stop shake
