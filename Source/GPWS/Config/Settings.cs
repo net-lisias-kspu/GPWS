@@ -33,6 +33,7 @@ namespace KSP_GPWS
     {
         public void Awake()
         {
+            Gpws.InitializeGPWSFunctions();
             // load settings when game start
             Settings.LoadSettings();
             // check toolbar
@@ -40,7 +41,6 @@ namespace KSP_GPWS
             {
                 Log.warn("Blizzy78 Toolbar not available");
             }
-            Gpws.InitializeGPWSFunctions();
         }
     }
 
@@ -218,22 +218,16 @@ namespace KSP_GPWS
 				gpwsNode.AddNode(vesselNode);
 			}
 			{
-				ConfigNode planeNode = vesselNode.GetNode(planeDefaultConfigNode.name);
-				if (null == planeNode)
-				{
-					planeNode = new ConfigNode(planeDefaultConfigNode.name);
-					vesselNode.AddNode(planeNode);
-				}
-				CurrentPlaneConfig.Save(planeNode);
+				ConfigNode planeNode = new ConfigNode(planeDefaultConfigNode.name);
+   				CurrentPlaneConfig.Save(planeNode);
+				vesselNode.RemoveNode(planeNode.name);
+				vesselNode.AddNode(planeNode);
 			}
 			{
-				ConfigNode landerNode = vesselNode.GetNode(landerDefaultConfigNode.name);
-				if (null == landerNode)
-				{
-					landerNode = new ConfigNode(landerDefaultConfigNode.name);
-					vesselNode.AddNode(landerNode);
-				}
-				CurrentLanderConfig.Save(landerNode);
+				ConfigNode landerNode = new ConfigNode(landerDefaultConfigNode.name);;
+   				CurrentLanderConfig.Save(landerNode);
+                vesselNode.RemoveNode(landerNode.name);
+				vesselNode.AddNode(landerNode);
 			}
 			config.Save();
 		}

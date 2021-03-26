@@ -267,8 +267,8 @@ namespace KSP_GPWS.Impl
                     // speed in meters/feet per s
                     if (UnitOfAltitude.FOOT == UnitOfAltitude)
                     {
-                        hSpeed = hSpeed * Util.M_TO_FT;
-                        vSpeed = vSpeed * Util.M_TO_FT;
+                        hSpeed *= Util.M_TO_FT;
+                        vSpeed *= Util.M_TO_FT;
                     }
                     if (vSpeed < 0)
                     {

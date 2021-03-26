@@ -338,17 +338,13 @@ namespace KSP_GPWS.Impl
             // change RA to RA of lowest gear
             float gearAltitudeInMeter = Util.GetLowestGearRadarAltitude(gears);
             // height in meters/feet
+            CommonData.RadarAltitude = gearAltitudeInMeter;
             if (UnitOfAltitude.FOOT == UnitOfAltitude)
             {
-                CommonData.RadarAltitude = gearAltitudeInMeter * Util.M_TO_FT;
-            }
-            else
-            {
-                CommonData.RadarAltitude = gearAltitudeInMeter;
+                CommonData.RadarAltitude *= Util.M_TO_FT;
             }
 
             isGearDown = Util.GearDeployed(Util.GetLowestGear(gears));
-
 
             if (CommonData.CurrentTime - CommonData.TakeOffTime <= 0.1f && CommonData.CurrentTime - CommonData.LandingTime > 5.0f)  // taxi
             {

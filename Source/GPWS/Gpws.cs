@@ -83,6 +83,8 @@ namespace KSP_GPWS
 
         private IBasicGpwsFunction gpwsFunc;
 
+        private bool softDisabled = false;
+
         public static SimpleTypes.VesselType ActiveVesselType
         {
             get
@@ -174,22 +176,37 @@ namespace KSP_GPWS
             Log.trace("Start");
 
             // We are in flight, it's guarantted that a Vessel is active now.
-            this.ActiveVessel = FlightGlobals.ActiveVessel;
+            this.LastActiveVessel = this.ActiveVessel = FlightGlobals.ActiveVessel;
             this.saveData();    // Guarantee a initial state. 
-            Log.dbg("Start {0}", this.ActiveVessel.vesselName);
+            Log.dbg("Start with {0}", this.ActiveVessel.vesselName);
             Settings.LoadCurrentVesselConfig(this.ActiveVessel);
             plane.ChangeVessel(this.ActiveVessel);
             lander.ChangeVessel(this.ActiveVessel);
+            this.checkVesselType();
 
             GameEvents.onVesselChange.Add(this.OnVesselChange);
             this.started = true;
         }
 
-        private void OnVesselChange(Vessel v)
+		// check vessel type
+		private void checkVesselType()
+		{
+			this.softDisabled = false;
+            
+			switch(ActiveVesselType)
+			{
+				case SimpleTypes.VesselType.PLANE :		gpwsFunc = plane as IBasicGpwsFunction; break;
+				case SimpleTypes.VesselType.LANDER:		gpwsFunc = lander as IBasicGpwsFunction; break;
+				default:								this.softDisabled = true; break; // We can't work on these conditions! :)
+			}
+		}
+
+		private void OnVesselChange(Vessel v)
         {
             Log.trace("OnVesselChange {0}", v.vesselName);
 
             Settings.SaveCurrentVesselConfig(this.LastActiveVessel);
+            this.checkVesselType();
             Settings.LoadCurrentVesselConfig(this.ActiveVessel);
             plane.ChangeVessel(v);
             lander.ChangeVessel(v);
@@ -218,31 +235,13 @@ namespace KSP_GPWS
                 return false;
             }
 
-            // check vessel type
-            if (ActiveVesselType == SimpleTypes.VesselType.PLANE)
-            {
-                gpwsFunc = plane as IBasicGpwsFunction;
-            }
-            else if (ActiveVesselType == SimpleTypes.VesselType.LANDER)
-            {
-                gpwsFunc = lander as IBasicGpwsFunction;
-            }
-            else
-            {
-                Util.audio.SetUnavailable();
-                return false;
-            }
-
             // height in meters/feet
+            RadarAltitude = Util.RadarAltitude(ActiveVessel);
+            Altitude = (float)FlightGlobals.ship_altitude;
             if (UnitOfAltitude.FOOT == gpwsFunc.UnitOfAltitude)
             {
-                RadarAltitude = Util.RadarAltitude(ActiveVessel) * Util.M_TO_FT;
-                Altitude = (float)(FlightGlobals.ship_altitude * Util.M_TO_FT);
-            }
-            else
-            {
-                RadarAltitude = Util.RadarAltitude(ActiveVessel);
-                Altitude = (float)FlightGlobals.ship_altitude;
+                RadarAltitude *= Util.M_TO_FT;
+                Altitude *= Util.M_TO_FT;
             }
 
             // speed
@@ -281,16 +280,11 @@ namespace KSP_GPWS
             return true;
         }
 
-        void UpdateGPWS()
-        {
-            gpwsFunc.UpdateGPWS();
-        }
-
         private int DutyCycle = -1; // To force a Duty Cycle on the first run.
         public void FixedUpdate()
         {
             if (!this.started) this.Start(); // Unity, by some reason, is not calling the Start callback!
-
+            if (this.softDisabled) return;
             // Save some CPU on slower machines. See UpdateDutyCycle on Settings. Must be [1, 50]. The bigger, less times per second this is called.
             // 1 = Runs every cycle
             // 50 = Runs once each 50 cycles.
@@ -300,7 +294,7 @@ namespace KSP_GPWS
 
             if (PreUpdate())
             {
-                UpdateGPWS();
+                gpwsFunc.UpdateGPWS();
             }
 
             saveData();
