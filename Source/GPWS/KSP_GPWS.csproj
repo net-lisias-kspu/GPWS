@@ -45,10 +45,11 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\LIB\managed\1.2.0\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="KSPe.HMI">
+      <HintPath>..\..\..\..\..\..\LIB\plugins\KSPe.HMI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\XInputState.cs" />
-    <Compile Include="Controller\XInputWrapper.cs" />
     <Compile Include="Impl\AudioManager.cs" />
     <Compile Include="Gpws.cs" />
     <Compile Include="Impl\ControlerManager.cs" />

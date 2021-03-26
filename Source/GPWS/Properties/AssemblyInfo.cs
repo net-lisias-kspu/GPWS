@@ -18,3 +18,4 @@ using System.Runtime.InteropServices;
 [assembly: KSPAssembly("KSP_GPWS", GPWS.Version.major, GPWS.Version.minor)]
 [assembly: KSPAssemblyDependency("KSPe", 2, 3)]
 [assembly: KSPAssemblyDependency("KSPe.UI", 2, 3)]
+[assembly: KSPAssemblyDependency("KSPe.HMI", 2, 3)]
