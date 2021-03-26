@@ -129,7 +129,7 @@ namespace KSP_GPWS
 
 		private static void Play(string mask, string msg)
 		{
-			Log.dbg("Screen message", msg);
+			Log.dbg("Screen message {0}", msg);
 			if (Settings.UseCaption) ScreenMessages.PostScreenMessage(string.Format(mask, msg));
 		}
 	}
