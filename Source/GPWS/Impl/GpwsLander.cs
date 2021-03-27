@@ -151,6 +151,13 @@ namespace KSP_GPWS.Impl
 
         public bool PreUpdate()
         {
+            // Check if system is enabled
+            if (!this.EnableSystem)
+            {
+                Util.audio.SetUnavailable();
+                return false;
+            }
+
             // check vessel state
             if (CommonData.ActiveVessel.state != Vessel.State.ACTIVE)
             {
