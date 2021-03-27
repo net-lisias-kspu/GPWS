@@ -10,7 +10,7 @@
 <#@ output extension=".cs" #>
 <#@ import namespace="System.IO" #>
 <#
-	string PROJECT_NAME = "KSP_GPWS";
+	string PROJECT_NAME = "GPWS";
 	int major = 0;
 	int minor = 0;
 	int patch = 0;
@@ -74,7 +74,7 @@
 #>
 
 // Automatically generated code. Any changes will be lost!
-namespace GPWS
+namespace <#= PROJECT_NAME #>
 {
 	public static class Version
 	{
