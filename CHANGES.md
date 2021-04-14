@@ -1,6 +1,6 @@
 # GPWS :: Changes
 
-* 2020-0327: 1.0.0.0 (LisiasT) for KSP >= 1.2
+* 2021-0327: 1.0.0.0 (LisiasT) for KSP >= 1.2
 	+ Added KSPe facilities:
 		- Logging
 		- File System Abstraction
