@@ -1,8 +1,8 @@
-# GPWS /L Unofficial
+# GPWS /L Unleashed
 
 This mod adds warning sounds for KSP. GPWS means "ground proximity warning system", a terrain awareness and alerting system. I also add TCAS ("traffic collision avoidance system") warning.
 
-Unofficial fork by Lisias.
+[Unleashed](https://ksp.lisias.net/add-ons-unleashed/) fork by Lisias.
 
 
 ## In a Hurry
@@ -83,7 +83,22 @@ Detailed installation instructions are now on its own file (see the [In a Hurry]
 
 ## License:
 
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. (CC-NC-SA 4)
+* GPWS /L is licensed as follows:
+	+ [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.txt). See [here](./LICENSE)
+		+ You are free to:
+			- Use : unpack and use the material in any computer or device
+			- Redistribute : redistribute the original package in any medium
+			- Adapt : Reuse, modify or incorporate source code into your works (and redistribute it!) 
+		+ Under the following terms:
+			- You retain any copyright notices
+			- You recognise and respect any trademarks
+			- You don't impersonate the authors, neither redistribute a derivative that could be misrepresented as theirs.
+			- You credit the author and republish the copyright notices on your works where the code is used.
+			- You relicense (and fully comply) your works using GPL 3.0
+			- You don't mix your work with GPL incompatible works.
+		
+KSP GPWS and previous are still available under the [CC BY SA 4.0i](https://creativecommons.org/licenses/by-sa/4.0/legalcode), and can be found on [this branch](https://github.com/net-lisias-kspu/GPWS/tree/Source/CC-BY-SA-40i) (and on the previous maintainer's repository, see below). Please note this [statement](https://www.gnu.org/licenses/license-list.en.html#ccbysa) from FSF.
+
 
 Please note the copyrights and trademarks in [NOTICE](./NOTICE).
 
