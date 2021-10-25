@@ -69,13 +69,6 @@ namespace KSP_GPWS.UI
         public static void toggleSettingGui(bool active)
         {
             Settings.guiIsActive = active;
-            if (!active)
-            {
-                if (!(Settings.UseBlizzy78Toolbar && ToolbarManager.ToolbarAvailable) && GuiAppLaunchBtn.appBtn != null)
-                {
-                    GuiAppLaunchBtn.appBtn.SetFalse(false);
-                }
-            }
             Settings.SaveToXml();
         }
 

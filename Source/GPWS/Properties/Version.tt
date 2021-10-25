@@ -74,7 +74,7 @@
 #>
 
 // Automatically generated code. Any changes will be lost!
-namespace KSP_GPWS
+namespace <#= PROJECT_NAME #>
 {
 	public static class Version
 	{

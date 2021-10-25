@@ -12,9 +12,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 //[assembly: AssemblyInformationalVersionAttribute("<%= git_version %>")]
-[assembly: AssemblyVersion(KSP_GPWS.Version.Number)]
-[assembly: AssemblyFileVersion(KSP_GPWS.Version.Number)]
+[assembly: AssemblyVersion(GPWS.Version.Number)]
+[assembly: AssemblyFileVersion(GPWS.Version.Number)]
 
-[assembly: KSPAssemblyDependency("KSPe", 2, 3)]
-[assembly: KSPAssemblyDependency("KSPe.UI", 2, 3)]
-[assembly: KSPAssemblyDependency("KSPe.HMI", 2, 3)][assembly: KSPAssembly("KSP_GPWS", KSP_GPWS.Version.major, KSP_GPWS.Version.minor)]
+[assembly: KSPAssembly("KSP_GPWS", GPWS.Version.major, GPWS.Version.minor)]
+[assembly: KSPAssemblyDependency("KSPe", 2, 4)]
+[assembly: KSPAssemblyDependency("KSPe.UI", 2, 4)]
+[assembly: KSPAssemblyDependency("KSPe.HMI", 2, 4)]

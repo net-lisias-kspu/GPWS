@@ -16,28 +16,24 @@
 	along with GPWS /L Unleashed. If not, see <https://www.gnu.org/licenses/>.
 
 */
-using System;
 using UnityEngine;
-using Log = KSP_GPWS.Log;
 
-namespace GPWS  // To induce KSPe Asset to use this namespace
+using KSPe.Annotations;
+using GUI = KSPe.UI.GUI;
+using GUILayout = KSPe.UI.GUILayout;
+using Toolbar = KSPe.UI.Toolbar;
+
+namespace KSP_GPWS
 {
-    [KSPAddon(KSPAddon.Startup.Instantly, true)]
-    internal class Startup : MonoBehaviour
+	[KSPAddon(KSPAddon.Startup.MainMenu, true)]
+	public class ToolbarController : MonoBehaviour
 	{
-        private void Start()
-        {
-            Log.force("Version {0}", Version.Text);
+		internal static KSPe.UI.Toolbar.Toolbar Instance => KSPe.UI.Toolbar.Controller.Instance.Get<ToolbarController>();
 
-            try
-            {
-                KSPe.Util.Installation.Check<Startup>();
-            }
-            catch (KSPe.Util.InstallmentException e)
-            {
-                Log.error(e.ToShortMessage());
-                KSPe.Common.Dialogs.ShowStopperAlertBox.Show(e);
-            }
-        }
+		[UsedImplicitly]
+		private void Start()
+		{
+			KSPe.UI.Toolbar.Controller.Instance.Register<ToolbarController>(GPWS.Version.FriendlyName);
+		}
 	}
 }

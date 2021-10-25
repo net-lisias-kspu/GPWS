@@ -37,7 +37,7 @@ namespace KSP_GPWS
             // load settings when game start
             Settings.LoadSettings();
             // check toolbar
-            if (Settings.UseBlizzy78Toolbar && !ToolbarManager.ToolbarAvailable)
+            if (Settings.UseBlizzy78Toolbar && false)
             {
                 Log.warn("Blizzy78 Toolbar not available");
             }
