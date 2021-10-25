@@ -78,6 +78,7 @@
     <Compile Include="Config\Sounds.cs" />
     <Compile Include="Config\Captions.cs" />
     <Compile Include="ModuleManagerSupport.cs" />
+    <Compile Include="Properties\LegalMamboJambo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
