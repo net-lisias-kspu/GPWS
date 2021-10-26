@@ -4,7 +4,7 @@
 		© 2015-2018 bssthu
 		© 2013-2014 Cryphonus
 
-	GPWS /L is double licensed, as follows:
+	GPWS /L is licensed as follows:
 
 		* GPL 3.0 : https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -15,7 +15,7 @@
 	You should have received a copy of the GNU General Public License 2.0
 	along with GPWS /L Unleashed. If not, see <https://www.gnu.org/licenses/>.
 
-*/
+ */
 ﻿using UnityEngine;
 
 using KSPe.HMI.Multiplatform.XInput;

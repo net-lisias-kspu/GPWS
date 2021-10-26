@@ -1,17 +1,19 @@
 ﻿/*
-	This file is part of KSP GPWS
-	(C) 2021 Lisias T : http://lisias.net <support@lisias.net>
+	This file is part of GPWS /L Unleashed
+		© 2021 Lisias T : http://lisias.net <support@lisias.net>
+		© 2015-2018 bssthu
+		© 2013-2014 Cryphonus
 
-	This file is licensed as follows:
+	GPWS /L is licensed as follows:
 
-	* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
+		* GPL 3.0 : https://www.gnu.org/licenses/gpl-3.0.txt
 
-	This file is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	GPWS /L Unleashed is distributed in the hope that it will be useful, but
+	WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE.
 
-	You should have received a copy of the SKL Standard License 1.0
-	along with KSPe API Extensions/L. If not, see <https://ksp.lisias.net/SKL-1_0.txt>.
+	You should have received a copy of the GNU General Public License 2.0
+	along with GPWS /L Unleashed. If not, see <https://www.gnu.org/licenses/>.
 
 */
 using KSP_GPWS.SimpleTypes;

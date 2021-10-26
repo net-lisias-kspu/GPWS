@@ -1,10 +1,10 @@
 ﻿/*
 	This file is part of KSP GPWS
-	(C) 2021 Lisias T : http://lisias.net <support@lisias.net>
+		© 2021 Lisias T : http://lisias.net <support@lisias.net>
 
 	This file is licensed as follows:
 
-	* SKL 1.0 : https://ksp.lisias.net/SKL-1_0.txt
+		* GPL 3.0 : https://www.gnu.org/licenses/gpl-3.0.txt
 
 	This file is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
