@@ -36,11 +36,6 @@ namespace KSP_GPWS
             Gpws.InitializeGPWSFunctions();
             // load settings when game start
             Settings.LoadSettings();
-            // check toolbar
-            if (Settings.UseBlizzy78Toolbar && false)
-            {
-                Log.warn("Blizzy78 Toolbar not available");
-            }
         }
     }
 
@@ -135,6 +130,7 @@ namespace KSP_GPWS
                     Util.ConvertValue<bool>(node, "UseCaption", ref UseCaption);
                     Util.ConvertValue<float>(node, "Volume", ref Volume);
                     Util.ConvertValue(node, "UseBlizzy78Toolbar", ref UseBlizzy78Toolbar);
+                    UseBlizzy78Toolbar = false; // FIXME: Remove this once Blizzy support on KSPe.UI is done.
                     Util.ConvertValue(node, "UpdateDutyCycle", ref UpdateDutyCycle);
                 }   // End of has value "name"
             }
@@ -194,6 +190,7 @@ namespace KSP_GPWS
 
                 gpwsNode.AddValue("UseCaption", Settings.UseCaption);
                 gpwsNode.AddValue("Volume", Settings.Volume);
+                UseBlizzy78Toolbar = false; // FIXME: Remove this once Blizzy support on KSPe.UI is done.
                 gpwsNode.AddValue("UseBlizzy78Toolbar", UseBlizzy78Toolbar);
                 gpwsNode.AddValue("UpdateDutyCycle", UpdateDutyCycle);
 

@@ -44,7 +44,7 @@ namespace KSP_GPWS.UI
 						, new Toolbar.Button.Event(this.onAppLaunchToggleOnOff, this.onAppLaunchToggleOnOff)
 					);
 				ToolbarController.Instance.Add(appBtn);
-				ToolbarController.Instance.BlizzyActive(Settings.UseBlizzy78Toolbar);
+				ToolbarController.Instance.ButtonsActive(!Settings.UseBlizzy78Toolbar, Settings.UseBlizzy78Toolbar);
 			}
 
 			if (Settings.guiIsActive)
