@@ -1,5 +1,7 @@
 # GPWS :: Change Log
 
+* 2021-1211: 1.0.0.2 (LisiasT) for KSP >= 1.2
+	+ Preventing the Stock toolbar from not be used until Blizzy support is implemented on KSPe.UI.
 * 2021-1027: 1.0.0.1 (LisiasT) for KSP >= 1.2
 	+ Added KSPe facilities:
 		- Logging
