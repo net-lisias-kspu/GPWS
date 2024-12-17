@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of GPWS /L Unleashed
-		© 2021 Lisias T : http://lisias.net <support@lisias.net>
+		© 2021-2024 LisiasT : http://lisias.net <support@lisias.net>
 		© 2015-2018 bssthu
 		© 2013-2014 Cryphonus
 

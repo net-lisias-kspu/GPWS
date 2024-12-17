@@ -1,6 +1,6 @@
 ﻿/*
 	This file is part of KSP GPWS
-		© 2021 Lisias T : http://lisias.net <support@lisias.net>
+		© 2021-2024 LisiasT : http://lisias.net <support@lisias.net>
 
 	This file is licensed as follows:
 
