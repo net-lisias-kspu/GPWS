@@ -30,7 +30,6 @@ namespace KSP_GPWS
 		internal Sounds()
 		{
 			this.audioPlayer = new GameObject();
-			this.asGPWS = new AudioSource();
 			this.asGPWS = audioPlayer.AddComponent<AudioSource>();
 
 			this.asGPWS.volume = GameSettings.UI_VOLUME;
